@@ -28,6 +28,7 @@ namespace game_01
         //private float boostTank;
         private float movementSpeed;
         //private bool boosting;
+        private new Rigidbody2D rigidbody;
 
         private void Awake()
         {
@@ -35,31 +36,36 @@ namespace game_01
             //boostTank = 0;
             movementSpeed = baseMovementSpeed;
             //boosting = false;
+            rigidbody = GetComponent<Rigidbody2D>();
         }
 
         public void Update()
         {
-            GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+            //rigidbody.velocity = Vector3.zero;
             if (Input.GetKey(KeyCode.W))
             {
-                GetComponent<Rigidbody2D>().velocity = transform.up * movementSpeed;
+                rigidbody.AddForce(new Vector2(0,1) * movementSpeed);
             }
-            if (Input.GetKeyDown(KeyCode.A))
+            if (Input.GetKey(KeyCode.A))
             {
-                transform.Rotate(new Vector3(0, 0, 90));
+                rigidbody.AddForce(new Vector2(-1, 0) * movementSpeed);
             }
-            if (Input.GetKeyDown(KeyCode.D))
+            if (Input.GetKey(KeyCode.S))
             {
-                transform.Rotate(new Vector3(0, 0, -90));
+                rigidbody.AddForce(new Vector2(0, -1) * movementSpeed);
             }
-            GetComponent<Rigidbody2D>().angularVelocity = 0f;
+            if (Input.GetKey(KeyCode.D))
+            {
+                rigidbody.AddForce(new Vector2(1, 0) * movementSpeed);
+            }
+            //rigidbody.angularVelocity = 0f;
             if (Input.GetKey(KeyCode.Q))
             {
-                GetComponent<Rigidbody2D>().angularVelocity = baseTurnSpeed;
+                rigidbody.AddTorque(baseTurnSpeed);
             }
             if (Input.GetKey(KeyCode.E))
             {
-                GetComponent<Rigidbody2D>().angularVelocity = -baseTurnSpeed;
+                rigidbody.AddTorque(-baseTurnSpeed);
             }
 
 
@@ -90,7 +96,7 @@ namespace game_01
 
             //movementVector = movementVector.normalized;
             //Vector3 movement = new Vector3(0,1,0) * (movementSpeed);
-            //GetComponent<Rigidbody2D>().velocity = movement;
+            //rigidbody.velocity = movement;
 
             //transform.rotation = Quaternion.FromToRotation(new Vector3(0,1,0), movementVector);
 
